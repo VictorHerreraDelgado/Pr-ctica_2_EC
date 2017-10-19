@@ -1,0 +1,26 @@
+.text /* executable code follows */
+.global _start
+_start:
+
+
+                movia r15,0x10000020
+                movia r17,POS_START
+                movia r18,POS_FINAL
+                ldw r5,0(r17)
+                ldw r6,0(r18)
+
+LOOP:           stwio r5,0(r15)
+                bne r5,r6,DESP
+                ldw r5,0(r17)
+
+                br DELAY
+DESP:           roli r5,r5,8
+DELAY:          movia r7, 500000 /* delay counter */
+                subi r7, r7, 1
+                bne r7, r0, DELAY
+                br DO_DISPLAY
+.data
+POS_START:
+                .word 0x3F
+POS_FINAL:
+                .word 0x3F000000

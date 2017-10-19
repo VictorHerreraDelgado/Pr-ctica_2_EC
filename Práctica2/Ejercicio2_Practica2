@@ -1,0 +1,40 @@
+/*Diseñar un programa ensamblador que encienda alternativamente cada uno de
+*los leds verdes de la placa DE2. Nota: observar la asignación de la dirección del
+*espacio de direccionamiento del procesador NIOS II de la interfaz paralela de
+*los leds verdes (LEDG) que se encuentra en el ejercicio anterior.
+*/
+
+
+
+
+
+
+.text /* executable code follows */
+.global _start
+_start:
+            movia r15,0x10000010
+            movia r16,START_POS
+            movia r17,FINAL_POS
+            ldw r5, 0(r16)
+            ldw r6, 0(r17)
+LOOP:       stwio r5, 0(r15)
+
+            bne r5,r6,DESP
+            ldw r5,0(r16)
+            br DELAY
+DESP:       roli r5, r5, 1
+
+DELAY:      movia r7, 500000 /* delay counter */
+
+            subi r7, r7, 1
+            bne r7, r0, DELAY
+            br DO_DISPLAY
+
+
+
+.data
+
+START_POS:
+            .word 0x001
+FINAL_POS:
+            .word 0x100

@@ -1,0 +1,42 @@
+//Ejercicio 1
+/**
+*Diseñar un programa ensamblador que encienda alternativamente todos los
+*placa DE2. Nota: observar la asignación de la dirección del espacio de
+*direccionamiento del procesador NIOS II de la interfaz paralela de los leds rojos
+*(LEDR) que se muestra a continuación.
+*/
+.text /* executable code follows */
+.global _start
+_start:
+
+        movia r15,0x10000000   /* Inicializamos la direccion de los leds rojos en r15 */
+        movia r16,HEX_IMPARES  /* Inicializamos en r16 el valor de los switch impares */
+        ldw r5, 0(r16)
+        movia r17,HEX_PARES    / *Inicializamos en r16 el valor de los switch pares */
+        ldw r6, 0(r17)
+REPETITION:
+        stwio r5, 0(r15)
+        br DELAY!
+
+PRIMER: stwio r6, 0(r15)
+DELAY2: movia r7, 500000 /* delay counter */
+        subi r7, r7, 1
+        bne r7, r0, DELAY2
+        br REPETITION
+
+
+DELAY1: movia r7, 500000 /* delay counter */
+        subi r7, r7, 1
+        bne r7, r0, DELAY1
+        br PRIMER
+
+
+
+
+.data
+
+HEX_IMPARES:
+      .word 0x15555
+HEX_PARES:
+      .word 0x2AAAA
+.end
