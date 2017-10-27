@@ -16,7 +16,7 @@ _start:
         ldw r6, 0(r17)
 REPETITION:
         stwio r5, 0(r15)
-        br DELAY!
+        br DELAY1
 
 PRIMER: stwio r6, 0(r15)
 DELAY2: movia r7, 500000 /* delay counter */
