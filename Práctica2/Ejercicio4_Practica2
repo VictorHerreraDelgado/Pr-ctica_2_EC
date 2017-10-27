@@ -14,3 +14,4 @@ DO_DISPLAY:         ldwio r5,0(r15)
                     nor r6,r5,r0
                     stwio r6,0(r16)
                     br DO_DISPLAY
+.end
